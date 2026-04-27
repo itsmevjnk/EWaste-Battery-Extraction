@@ -34,8 +34,8 @@ def generate_urdf(context, *args, **kwargs):
     moveit = context.perform_substitution(LaunchConfiguration("moveit"))
     use_fake_hardware = context.perform_substitution(LaunchConfiguration("use_fake_hardware"))
 
-    kortex_description_path = get_package_share_directory('kinova_urdf') # contains patched xacro files
-    xacro_file = os.path.join(kortex_description_path, 'urdf', 'gen3_lite_gen3_lite_2f.xacro')
+    kinova_urdf_path = get_package_share_directory('kinova_urdf') # contains patched xacro files
+    xacro_file = os.path.join(kinova_urdf_path, 'urdf', 'gen3_lite_gen3_lite_2f.xacro')
 
     # robot_description_content = Command(
     #     [
@@ -63,6 +63,10 @@ def generate_urdf(context, *args, **kwargs):
         command,
         capture_output=True, text=True
     ).stdout
+
+    # convert absolute path to package path
+    share_dir = os.path.dirname(get_package_share_directory('kortex_description')) # /opt/ros/jazzy/share
+    robot_description_content = robot_description_content.replace(f'file://{share_dir}/', 'package://')
 
     OUTPUT_FNAME = 'kinova_gen3_lite.urdf'
     with open(OUTPUT_FNAME, 'w') as f:
