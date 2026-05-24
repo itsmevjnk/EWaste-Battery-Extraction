@@ -1,0 +1,20 @@
+# MATLAB
+*.asv
+*.m~
+*.mat
+
+# Generated output
+results/
+
+# Mesh files - get from the manufacturer ROS packages if needed
+urdf/*.STL
+urdf/*.stl
+urdf/gen3_meshes/
+urdf/xarm7_meshes/
+
+# OS / editor
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+*.swp
